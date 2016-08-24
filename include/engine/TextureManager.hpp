@@ -1,0 +1,8 @@
+//
+// Created by Clark Burton Chambers on 8/24/16.
+//
+
+#ifndef CLARKWAYLIFE_TEXTUREMANAGER_HPP
+#define CLARKWAYLIFE_TEXTUREMANAGER_HPP
+
+#endif //CLARKWAYLIFE_TEXTUREMANAGER_HPP
