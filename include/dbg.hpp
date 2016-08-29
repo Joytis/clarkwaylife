@@ -24,8 +24,6 @@
 // Define phrases here for debug(A, M, ...) to pass into A
 // EX: #define DBG_MAIN DEBUG_ON
 
-#define DBG_MAIN                    DEBUG_ON
-
 // __FILENAME__ is used to clean up the file paths a fair bit.
 #ifdef WIN32
 #define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1: __FILE__)

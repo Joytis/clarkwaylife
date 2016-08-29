@@ -7,11 +7,18 @@
 #include "dbg.hpp"
 #include "exceptions.hpp"
 
+typedef unsigned char BYTE;
+typedef unsigned int ULONG;
+
 // If NULL not defined on platform, define as a null pointer with void * type
 // TODO(clark): Do we want to just define our own null?
 #ifndef NULL
 #define NULL (void *)0
 #endif
+
+// Debug macro definitions
+#define DBG_MAIN                    DEBUG_ON
+#define DBG_STATES                  DEBUG_ON
 
 #define S(val) (std::to_string(val))
 
