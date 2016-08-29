@@ -1,5 +1,6 @@
 Things we're missing from the engine:
-    Renderer (SDL_Renderer abstraction)
+    Input        (SDL_Event-based Input system definition)
+    Renderer     (SDL_Renderer abstraction)
     AudioManager (SDL_Audio stuff abstraction)
     A base GameObject?? Possibly?
     
