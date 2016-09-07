@@ -12,5 +12,10 @@
 #include "StateSystem.hpp"
 #include "TextureManager.hpp"
 #include "Renderer.hpp"
+#include "GameObject.hpp"
+#include "RenderObject.hpp"
+#include "EngineObj.hpp"
+
+extern EngineObj eng;
 
 #endif //__engine_H_

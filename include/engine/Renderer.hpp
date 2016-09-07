@@ -12,6 +12,9 @@
 
 #include "engine_includes.hpp"
 #include "TextureManager.hpp"
+#include "RenderObject.hpp"
+
+#define RENDER_BUFFER_LENGTH        (256)
 
 class Renderer
 {
@@ -20,16 +23,27 @@ private:
     TextureManager  tm_;
     SDL_Renderer*   renderer_;
     SDL_Window*     w_handle_;
+    RenderObject*   render_buffer_[RENDER_BUFFER_LENGTH];
+    // Abstract render buffers into another class to simplify renderer?
+    unsigned int    rbuffer_index_;
+
 
 public:
 
-    Renderer();
     Renderer(SDL_Window* win);
 
-    int add_texture(std::string key, SDL_Texture* tex);
-    int remove_texture(std::string key);
-    int load_texture(std::string key, std::string path);
-    int remove_texture(std::string key);
+    int removeTexture(std::string key);
+    int loadTexture(std::string key, std::string path);
+    SDL_Texture* getTexture(std::string key);
+
+
+    // NOTE(clark): Should we sort the renderer buffer by texture, or make seperate render buffers for each texture.
+    // NOTE(clark): We could also, upon loading of textures, create a buffer for each respective texture in memory
+    // TODO(clark): These methods are up for dicsussiona nd testing
+    // Add object to the render buffer?
+    void render(RenderObject* robj);
+    // Draws all objects in the buffer?
+    void draw();
 
 };
 

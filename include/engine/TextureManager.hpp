@@ -5,7 +5,6 @@
 #ifndef __TextureManager_H_
 #define __TextureManager_H_
 
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 

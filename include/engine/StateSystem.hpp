@@ -9,8 +9,9 @@
 #include <vector>
 #include <string>
 
-#include "State.hpp"
 #include "engine_includes.hpp"
+
+#include "State.hpp"
 
 class StateSystem
 {

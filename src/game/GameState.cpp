@@ -5,10 +5,18 @@
 
 #include "GameState.hpp"
 
-GameState::GameState(SDL_Texture* tex, SDL_Window* win):
-    w_handle_(win),
-    bird_(tex)
-{ }
+GameState::GameState()
+{
+    bird_ = new RenderObject();
+    Sprite* spr = new Sprite(eng.renderer()->getTexture("bird"));
+    bird_->setSprite(spr);
+    //bird_->setSprite();
+}
+
+GameState::~GameState()
+{
+    if(bird_) delete bird_;
+}
 
 void GameState::input()
 {
@@ -21,6 +29,7 @@ void GameState::update()
 }
 void GameState::render()
 {
+    eng.render(bird_);
     debug(DBG_STATES, "GameState: render");
 }
 

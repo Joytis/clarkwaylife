@@ -12,6 +12,7 @@
 
 #define ENGINE_DBG_STATES               ENGINE_DEBUG_ON
 #define ENGINE_DBG_RENDERER             ENGINE_DEBUG_ON
+#define ENGINE_DBG_SPRITE               ENGINE_DEBUG_ON
 
 #define ERR_GENERIC_FAILED              (-1)
 #define GENERIC_SUCCESS                 (1)

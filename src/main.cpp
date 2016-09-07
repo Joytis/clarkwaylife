@@ -11,9 +11,7 @@
 // TODO(clark): Potentially abstract these all into the engine?
 #include "engine.hpp"
 
-// Game states
 #include "states.hpp"
-
 #include "file_strings.hpp"
 
 // Texture Manager
@@ -22,11 +20,12 @@
 
 // TODO(clark): Define an assert statement.
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
 using namespace std;
 
+// Declare the variable that will be the engine.
+// Externs B).
+// Look into a better way to defining globals.
+EngineObj eng;
 int main()
 {
     //
@@ -34,40 +33,28 @@ int main()
     //======================================
 
     // Engine components
-    StateSystem         system_;
-    TextureManager      t_manager_;
+    // the ONLY instance of Engine object that you should //EVER// make
 
     // SDL components
-    SDL_Window*   window            = NULL;
-    SDL_Renderer* renderer          = NULL;
     SDL_Event     sdl_event;
-    ULONG         imgFlags          = 0;
     bool          running           = true;
 
     // Initialize SDL
     //-------------------------------------------------------------
-    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0) { running = false; }
-    window = SDL_CreateWindow(
-            "Clarkwaylife",
-            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-            SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    assert(window);
-
-    // Initialize IMG
-    imgFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF;
-    if( !( IMG_Init( imgFlags ) & imgFlags ) & imgFlags ) { running = false; }
-
+    if(eng.init() != GENERIC_SUCCESS)
+    {
+        running = false;
+    }
 
     // Initialize the texture manager
     //-------------------------------------------------------------
-    renderer = t_manager_.create_renderer(window);
-    t_manager_.load_texture("bird", CUTE_BIRD_JPG);
-
+    eng.renderer()->loadTexture("bird", CUTE_BIRD_JPG);
+    //
     // Initialize the state system
     //-------------------------------------------------------------
-    SDL_Texture* tmp = t_manager_.get_texture("bird");
-    system_.add_state("game", new GameState(tmp, window));
-    system_.swap_state("game");
+    //SDL_Texture* tmp = t_manager_.get_texture("bird");
+    eng.system()->add_state("game", new GameState());
+    eng.system()->swap_state("game");
 
     //
     //  Start main loop
@@ -94,29 +81,23 @@ int main()
             }
         }
 
-        system_.input();
-        system_.update();
-        system_.render();
+        eng.system()->input();
+        eng.system()->update();
+        eng.system()->render();
         //Clear screen
-        SDL_RenderClear( renderer );
+        //SDL_RenderClear( renderer );
 
         //Render texture to screen
-        SDL_RenderCopy( renderer, t_manager_.get_texture("bird"), NULL, NULL );
+        //sSDL_RenderCopy( renderer, t_manager_.get_texture("bird"), NULL, NULL );
 
         //Update screen
-        SDL_RenderPresent( renderer );
+        //SDL_RenderPresent( renderer );
     }
 
     //
     // Close everything
     //======================================
+    eng.close();
 
-    // State system
-    system_.clear();
-
-    // SDL
-    SDL_DestroyWindow(window);
-    IMG_Quit();
-    SDL_Quit();
     return 0;
 }

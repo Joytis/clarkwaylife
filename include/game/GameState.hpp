@@ -6,17 +6,19 @@
 #define LD36_GAMESTATE_HPP
 
 #include "includes.hpp"
+#include "engine.hpp"
 #include "State.hpp"
 
 class GameState : public State
 {
 private:
-    int test_;
-    SDL_Texture* bird_;
-    SDL_Window* w_handle_;
+    int             test_;
+    RenderObject*   bird_;
+
 public:
 
-    GameState(SDL_Texture* tex, SDL_Window* win);
+    GameState();
+    ~GameState();
 
     void input();
     void update();

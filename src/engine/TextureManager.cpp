@@ -7,7 +7,7 @@
 #include "TextureManager.hpp"
 
 
-TextureManager::TextureManager(): {}
+TextureManager::TextureManager() {}
 
 // Add a loaded texture into the texture map
 int TextureManager::add_texture(std::string key, SDL_Texture* value)
