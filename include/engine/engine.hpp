@@ -11,5 +11,6 @@
 #include "State.hpp"
 #include "StateSystem.hpp"
 #include "TextureManager.hpp"
+#include "Renderer.hpp"
 
 #endif //__engine_H_

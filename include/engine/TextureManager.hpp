@@ -21,16 +21,12 @@ class TextureManager
 private:
 
     map<string, SDL_Texture*>   textures_;
-    SDL_Renderer*               renderer_;
 
 public:
 
     TextureManager();
 
-    SDL_Renderer* create_renderer(SDL_Window* window);
-
     int add_texture(string key, SDL_Texture* tex);
-    int load_texture(string key, string path);
     SDL_Texture* get_texture(string key);
     int remove_texture(string key);
     void clear();

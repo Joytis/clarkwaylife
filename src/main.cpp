@@ -54,7 +54,7 @@ int main()
     assert(window);
 
     // Initialize IMG
-    imgFlags = IMG_INIT_PNG;
+    imgFlags = IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF;
     if( !( IMG_Init( imgFlags ) & imgFlags ) & imgFlags ) { running = false; }
 
 

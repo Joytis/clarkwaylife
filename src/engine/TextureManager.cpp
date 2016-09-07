@@ -7,20 +7,7 @@
 #include "TextureManager.hpp"
 
 
-TextureManager::TextureManager(): renderer_(NULL) {}
-
-SDL_Renderer* TextureManager::create_renderer(SDL_Window *window)
-{
-    //Create renderer for window
-    renderer_ = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
-    if( renderer_ == NULL )
-    {
-         return NULL;
-    }
-    //Initialize renderer color
-    SDL_SetRenderDrawColor(renderer_, 0xFF, 0xFF, 0xFF, 0xFF);
-    return renderer_;
-}
+TextureManager::TextureManager(): {}
 
 // Add a loaded texture into the texture map
 int TextureManager::add_texture(std::string key, SDL_Texture* value)
@@ -34,27 +21,6 @@ int TextureManager::add_texture(std::string key, SDL_Texture* value)
         return ERR_GENERIC_FAILED;
     }
     return GENERIC_SUCCESS;
-}
-
-// Load a texture into memory from a given path and store it in the map under
-//      a given key
-int TextureManager::load_texture(std::string key, std::string path)
-{
-    SDL_Texture* tex = NULL;
-
-    // Load up the image
-    SDL_Surface* surface = IMG_Load(path.c_str());
-    if(surface == NULL) return ERR_GENERIC_FAILED;
-
-    // Create the texture
-    tex = SDL_CreateTextureFromSurface(renderer_, surface);
-    if(tex == NULL) return ERR_GENERIC_FAILED;
-
-    // Destroy the surface
-    SDL_FreeSurface(surface);
-
-    // Add it to the map
-    return add_texture(key, tex);
 }
 
 // Returns a texture from a key
