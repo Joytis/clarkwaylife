@@ -49,14 +49,12 @@ int main()
     // Initialize the texture manager
     //-------------------------------------------------------------
     eng.renderer()->loadTexture("bird", CUTE_BIRD_JPG);
-    //
+
     // Initialize the state system
     //-------------------------------------------------------------
-    //SDL_Texture* tmp = t_manager_.get_texture("bird");
     eng.system()->add_state("game", new GameState());
     eng.system()->swap_state("game");
 
-    //
     //  Start main loop
     //======================================
     while(running)
@@ -84,19 +82,8 @@ int main()
         eng.system()->input();
         eng.system()->update();
         eng.system()->render();
-        //Clear screen
-        //SDL_RenderClear( renderer );
-
-        //Render texture to screen
-        //sSDL_RenderCopy( renderer, t_manager_.get_texture("bird"), NULL, NULL );
-
-        //Update screen
-        //SDL_RenderPresent( renderer );
     }
 
-    //
-    // Close everything
-    //======================================
     eng.close();
 
     return 0;
