@@ -10,9 +10,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 #======================================================================
 if(UNIX)
     set(SDL2_IMAGE_LIBRARY_DIR /usr/local/Cellar/sdl2_image/2.0.1_1/lib)
-
-elseif(WIN32)
-    
+elseif(MINGW)
+    set(SDL2_IMAGE_LIBRARY_DIR C:/MinGW/lib)
 endif()
 
 #

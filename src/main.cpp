@@ -8,34 +8,22 @@
 // Generic includes
 #include "includes.hpp"
 
-// TODO(clark): Potentially abstract these all into the engine?
 #include "engine.hpp"
 
 #include "states.hpp"
 #include "file_strings.hpp"
 
-// Texture Manager
-// Should I just put a header wiht a bunch of
-//      defined paths in here for the textures?
-
-// TODO(clark): Define an assert statement.
-
 using namespace std;
 
 // Declare the variable that will be the engine.
-// Externs B).
 // Look into a better way to defining globals.
+// the ONLY instance of Engine object that you should //EVER// make
 EngineObj eng;
 int main()
 {
     //
     // Initialize all components
     //======================================
-
-    // Engine components
-    // the ONLY instance of Engine object that you should //EVER// make
-
-    // SDL components
     SDL_Event     sdl_event;
     bool          running           = true;
 
