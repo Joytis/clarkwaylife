@@ -37,6 +37,12 @@ include_directories(
 #======================================================================
 add_executable(clarkwaylife ${clarkwaylife_SOURCES})
 
+# Assets
+#======================================================================
+add_custom_command(TARGET clarkwaylife POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${PROJECT_SOURCE_DIR}/assets $<TARGET_FILE_DIR:clarkwaylife>/assets)
+
 # Linking
 #==========================================================================
 
