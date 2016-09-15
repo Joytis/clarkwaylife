@@ -5,29 +5,43 @@
 #ifndef ENGINE_SPRITE_HPP
 #define ENGINE_SPRITE_HPP
 
-#include <SDL2/SDL.h>
-
 #include "engine_includes.hpp"
 #include "dbg.hpp"
 
 class Sprite
 {
 private:
-    SDL_Texture* t_handle_;
+
+protected:
+    // Texture dished out by the manager.
+    // Contains texture pointer and the natural w/h of texture
+    tex             texture_;
+
+
+    // The ON-SCREEN position of the Sprite. Used for SDL rendering.
+    SDL_Rect        rect_;
+
     // Give it a rectangle to determine Sprite render position?
     //SDL_Rectangle rect_;
+
 public:
 
     // Give it a handle to the texture.
-    Sprite(SDL_Texture* tex);
+    Sprite(tex t);
+    Sprite(tex t, int x, int y, int w, int h);
+    ~Sprite();
 
     // Check the actual data types SDL uses.
-    void setRectangle(int x, int y);
+    SDL_Rect* Rect();
+    void Rect(int x, int y, int w, int h);
+    int Y();
+    int X();
+    int Width();
+    int Height();
 
     // Gets the texture for now
-    SDL_Texture* getTexture();
-    void setTexture(SDL_Texture* tex);
-
+    tex Texture();
+    void Texture(tex t);
 };
 
 

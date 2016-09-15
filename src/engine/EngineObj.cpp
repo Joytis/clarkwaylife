@@ -49,6 +49,11 @@ void EngineObj::render(RenderObject *robj)
     renderer_->render(robj);
 }
 
+void EngineObj::present()
+{
+    renderer_->present();
+}
+
 void EngineObj::close()
 {
     system_->clear();

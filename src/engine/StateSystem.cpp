@@ -80,6 +80,12 @@ void StateSystem::update()
     current_->update();
 }
 
+//NOTE(clark): TEST
+void StateSystem::update(unsigned int input)
+{
+    current_->update(input);
+}
+
 void StateSystem::render()
 {
     current_->render();

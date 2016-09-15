@@ -31,6 +31,10 @@ public:
 
     void input();
     void update();
+
+    //NOTE(clark): TEST
+    void update(unsigned int inp);
+
     void render();
 };
 

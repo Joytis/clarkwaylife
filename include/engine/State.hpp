@@ -11,6 +11,10 @@ class State
 public:
     virtual void input() = 0;
     virtual void update() = 0;
+
+    // NOTE(clark): TEST
+    virtual void update(unsigned int inp) = 0;
+
     virtual void render() = 0;
 };
 

@@ -10,11 +10,11 @@
 TextureManager::TextureManager() {}
 
 // Add a loaded texture into the texture map
-int TextureManager::add_texture(std::string key, SDL_Texture* value)
+int TextureManager::add_texture(std::string key, tex t)
 {
-    if(value != NULL && textures_.find(key) == textures_.end())
+    if(t.texture != NULL && textures_.find(key) == textures_.end())
     {
-        textures_[key] = value;
+        textures_[key] = t;
     }
     else
     {
@@ -24,16 +24,14 @@ int TextureManager::add_texture(std::string key, SDL_Texture* value)
 }
 
 // Returns a texture from a key
-SDL_Texture* TextureManager::get_texture(std::string key)
+tex TextureManager::get_texture(std::string key)
 {
+    tex ret = {0};
     if(textures_.find(key) != textures_.end())
     {
-        return textures_[key];
+        ret = textures_[key];
     }
-    else
-    {
-        return NULL;
-    }
+    return ret;
 }
 
 // Removes a texture fomr the map
@@ -41,7 +39,7 @@ int TextureManager::remove_texture(std::string key)
 {
     if(textures_.find(key) != textures_.end())
     {
-        SDL_DestroyTexture(textures_[key]);
+        SDL_DestroyTexture(textures_[key].texture);
         textures_.erase(key);
     }
     else
@@ -55,10 +53,10 @@ int TextureManager::remove_texture(std::string key)
 // Clears all textures from the map
 void TextureManager::clear()
 {
-    std::map<string, SDL_Texture*>::iterator it;
+    std::map<string, tex>::iterator it;
     for(it = textures_.begin(); it != textures_.end(); it++)
     {
-        SDL_DestroyTexture(it->second);
+        SDL_DestroyTexture(it->second.texture);
     }
     textures_.clear();
 }

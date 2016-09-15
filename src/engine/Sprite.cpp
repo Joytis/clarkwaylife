@@ -5,33 +5,70 @@
 #include "Sprite.hpp"
 
 // Give it a handle to the texture.
-Sprite::Sprite(SDL_Texture* tex)
+Sprite::Sprite(tex t)
 {
-    t_handle_ = tex;
+    texture_ = t;
+    rect_.x = 0;
+    rect_.y = 0;
+    rect_.w = t.w;
+    rect_.h = t.h;
     // Do nothing with rect
     // rect_;
 }
 
-// Check the actual data types SDL uses.
-void Sprite::setRectangle(int x, int y)
-{
-    // Do nothing for now. We just want a texture handle.
+Sprite::Sprite(tex t, int x, int y, int w, int h){
+    texture_ = t;
+    rect_.x = x;
+    rect_.y = y;
+    rect_.w = w;
+    rect_.h = h;
 }
 
-SDL_Texture* Sprite::getTexture()
+// Placeholder Destructor
+Sprite::~Sprite() { }
+
+int Sprite::X()
 {
-    return t_handle_;
+    return rect_.x;
 }
 
-void Sprite::setTexture(SDL_Texture* tex)
+int Sprite::Y()
 {
-    if(tex != NULL)
-    {
-        t_handle_ = tex;
-    }
-    else
-    {
-        // TODO(clark): Error handling.
-        debug(ENGINE_DBG_SPRITE, "Can't set texture to NULL!");
-    }
+    return rect_.y;
+}
+
+int Sprite::Width()
+{
+    return rect_.w;
+}
+
+int Sprite::Height()
+{
+    return rect_.h;
+}
+
+SDL_Rect* Sprite::Rect()
+{
+    return &rect_;
+}
+
+void Sprite::Rect(int x, int y, int w, int h)
+{
+    rect_.x = x;
+    rect_.y = y;
+    rect_.w = w;
+    rect_.h = h;
+}
+
+
+tex Sprite::Texture()
+{
+    return texture_;
+}
+
+void Sprite::Texture(tex t)
+{
+    texture_ = t;
+    rect_.w = t.w;
+    rect_.h = t.h;
 }

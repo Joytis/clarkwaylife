@@ -19,6 +19,11 @@ using namespace std;
 // Look into a better way to defining globals.
 // the ONLY instance of Engine object that you should //EVER// make
 EngineObj eng;
+
+
+//===================================================================================//
+// -------------------- Clarkwaylife: Start of Main ---------------------------------//
+//===================================================================================//
 int main()
 {
     //
@@ -36,17 +41,43 @@ int main()
 
     // Initialize the texture manager
     //-------------------------------------------------------------
-    eng.renderer()->loadTexture("bird", CUTE_BIRD_JPG);
+    eng.renderer()->loadTexture("bird", CUTE_BIRD_JPG, REND_NONE);
+    eng.renderer()->loadTexture("foo", FOO_PNG, REND_KEYCOLOR);
 
     // Initialize the state system
     //-------------------------------------------------------------
     eng.system()->add_state("game", new GameState());
     eng.system()->swap_state("game");
 
-    //  Start main loop
-    //======================================
+    //======================================//
+    //  Start main loop                     //
+    //======================================//
+    unsigned int input;
     while(running)
     {
+        // Improv input
+        const Uint8* keyb = SDL_GetKeyboardState(NULL);
+
+        input = 0;
+
+
+        if(keyb[SDL_SCANCODE_UP])
+        {
+            input |= (1 << 0);
+        }
+        if(keyb[SDL_SCANCODE_DOWN])
+        {
+            input |= (1 << 1);
+        }
+        if(keyb[SDL_SCANCODE_LEFT])
+        {
+            input |= (1 << 2);
+        }
+        if(keyb[SDL_SCANCODE_RIGHT])
+        {
+            input |= (1 << 3);
+        }
+
         // SDL Event loop
         while(SDL_PollEvent(&sdl_event) != 0)
         {
@@ -61,15 +92,39 @@ int main()
                     case SDLK_ESCAPE:
                         running = false;
                         break;
+
                     default:
                         break;
                 }
             }
         }
 
-        eng.system()->input();
-        eng.system()->update();
+        // Game input, update, render
+        // TODO(clark): Determine whether or not it is worth having
+        //              a dedicated input step instead of jut having update
+        //              and render.
+
+        // TODO(clark): consolidate these into methods that make sense.
+        //              eng.system()->update()
+        //              eng.system()->render()
+        //              eng.present()
+
+        // Clear the engine renderer
+        //===========================
+        eng.renderer()->clear();
+
+        // Update the state system
+        //===========================
+        //printf("%d ", input);
+        eng.system()->update(input);
+
+        // Render the State system
+        //===========================
         eng.system()->render();
+
+        // Presend to Screen
+        //===========================
+        eng.present();
     }
 
     eng.close();

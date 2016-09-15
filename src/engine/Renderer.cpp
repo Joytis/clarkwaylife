@@ -30,18 +30,34 @@ int Renderer::removeTexture(std::string key)
 
 
 
-int Renderer::loadTexture(std::string key, std::string path)
+int Renderer::loadTexture(std::string key, std::string path, int flags)
 {
     SDL_Surface* surface = NULL;
-    SDL_Texture* tex = NULL;
+    tex texture;
 
     if(renderer_ != NULL && w_handle_ != NULL)
     {
         surface = IMG_Load(path.c_str());
-        tex = SDL_CreateTextureFromSurface(renderer_, surface);
+        if(surface == NULL)
+        {
+            debug(ENGINE_DBG_RENDERER, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError())
+        }
+        else
+        {
+            texture.h = surface->h;
+            texture.w = surface->w;
 
-        // TODO(clark): Check for errors coming from texture manager here
-        tm_.add_texture(key,tex);
+            // Key out a given color. Defined in engine_includes
+            if(flags & REND_KEYCOLOR)
+            {
+                SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, ENGINE_CHROMA_KEY_COLOR));
+            }
+            texture.texture = SDL_CreateTextureFromSurface(renderer_, surface);
+
+            // TODO(clark): Check for errors coming from texture manager here
+            tm_.add_texture(key,texture);
+        }
+
         SDL_FreeSurface(surface);
     }
     else
@@ -54,20 +70,28 @@ int Renderer::loadTexture(std::string key, std::string path)
 }
 
 // Error check this?
-SDL_Texture* Renderer::getTexture(std::string key)
+tex Renderer::getTexture(std::string key)
 {
     return tm_.get_texture(key);
+}
+
+void Renderer::clear()
+{
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
+    SDL_RenderClear(renderer_);
 }
 
 // TODO(clark): MAKE THIS BETTER. Super simple implementation
 void Renderer::render(RenderObject* robj)
 {
-    /* render the current animation step of our shape */
-    SDL_RenderCopy(renderer_, robj->getSprite()->getTexture(), NULL, NULL);
-    SDL_RenderPresent(renderer_);
+    Sprite* spr= robj->getSprite();
+    SDL_Rect* rec = spr->Rect();
+    SDL_Texture* texture = spr->Texture().texture;
+
+    SDL_RenderCopy(renderer_, texture, NULL, rec);
 }
 
-void Renderer::draw()
+void Renderer::present()
 {
-    // TODO(clark): implement
+    SDL_RenderPresent(renderer_);
 }

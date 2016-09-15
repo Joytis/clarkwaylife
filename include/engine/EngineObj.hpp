@@ -5,9 +5,6 @@
 #ifndef __Engine_H_
 #define __Engine_H_
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-
 #include "engine_includes.hpp"
 
 #include "StateSystem.hpp"
@@ -32,7 +29,10 @@ public:
     StateSystem* system();
     Renderer* renderer();
 
+    //void draw(RenderObject* robj);
+
     void render(RenderObject* robj);
+    void present();
 
     void close();
 
