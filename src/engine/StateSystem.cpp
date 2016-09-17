@@ -2,91 +2,84 @@
 // Created by Clark on 8/26/2016.
 //
 
+#include "GameState.cpp"
+
 #include "StateSystem.hpp"
+StateSystem::StateSystem(){
+    this.all_states['Game'] = GameState();
+}
 
-StateSystem::StateSystem(){}
-
-int StateSystem::add_state(std::string key, State* value)
-{
-    if(value != NULL && states_.find(key) == states_.end())
-    {
-        states_[key] = value;
-    }
-    else
-    {
+int StateSystem::add_state(std::string key) {
+    if(all_states.find(key) == all_states.end()) {
         return ERR_GENERIC_FAILED;
+    }
+    else {
+        temp_states.push_back(key);
     }
     return GENERIC_SUCCESS;
 }
 
-State* StateSystem::get_state(std::string key)
-{
-    if(states_.find(key) != states_.end())
-    {
-        return states_[key];
+State* StateSystem::get_state() {
+    if(!states.empty()) {
+        return states.back();
     }
-    else
-    {
+    else {
         return NULL;
     }
 }
 
-int StateSystem::remove_state(std::string key)
-{
-    if(states_.find(key) != states_.end())
-    {
-        delete states_[key];
-        states_.erase(key);
+State* StateSystem::get_previous_state() {
+    if(states.size() > 1) {
+        return states.end()[-2]
     }
-    else
-    {
-        return ERR_GENERIC_FAILED;
+    else {
+        return NULL;
     }
-    return GENERIC_SUCCESS;
 }
 
-// Swaps the state to another state in the map
-int StateSystem::swap_state(std::string key)
-{
-    if(states_.find(key) != states_.end())
-    {
-        current_ = states_[key];
+void StateSystem::back() {
+    temp_states.push_back(POP_STR);
+}
+
+void StateSystem::clear() {
+    temp_states.push_back(CLEAR_STR);
+}
+
+//updates the current state at every tick
+void StateSystem::update() {
+    State* working_state = this.get_state();
+    if(working_state) {
+        // If this is a new state...
+        if(!working_state->get_processed()) {
+            working_state->begin();
+            working_state->set_processed(true);
+        }
+        working_state->input();
+        working_state->update();
+        working_state->render();
+        // If we're changing states
+        if(!this.temp_states.empty()) {
+            working_state->set_processed(false);
+            working_state->end();
+        }
     }
-    else
-    {
-        return ERR_GENERIC_FAILED;
+    this.handle_temp_states()
+}
+
+void StateSystem::handle_temp_states() {
+    for(std::string key : this.temp_states) {
+        if(key == POP_STR) {
+            if(!this.states.empty()) {
+                this.states.pop_back();
+            }
+        }
+        else if(key == CLEAR_STR) {
+            // Delete all the states
+            while(!this.states.empty()) delete this.states.back(), this.states.pop_back();
+        }
+        else {
+            State* new_state = this.all_states[key]();
+            states.push_back(new_state);
+        }
     }
-    return GENERIC_SUCCESS;
-}
-
-void StateSystem::clear()
-{
-    // Delete all the states
-    std::map<std::string, State*>::iterator it;
-    for(it = states_.begin(); it != states_.end(); it++)
-    {
-        delete it->second;
-    }
-    states_.clear();
-}
-
-// Game function stuff
-void StateSystem::input()
-{
-    current_->input();
-}
-void StateSystem::update()
-{
-    current_->update();
-}
-
-//NOTE(clark): TEST
-void StateSystem::update(unsigned int input)
-{
-    current_->update(input);
-}
-
-void StateSystem::render()
-{
-    current_->render();
 }

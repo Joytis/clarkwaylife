@@ -13,29 +13,29 @@
 
 #include "State.hpp"
 
+#define POP_STR "pop"
+#define CLEAR_STR "clear"
+
 class StateSystem
 {
 private:
-    std::map<std::string, State*> states_;
-    State *current_;
+    std::map<std::string, State*> all_states;
+    std::vector<State*> states;
+    std::vector<State*> temp_states;
+    State *current;
 
 public:
 
     StateSystem();
 
-    int add_state(std::string key, State* value);
-    State* get_state(std::string key);
-    int  remove_state(std::string key);
-    int  swap_state(std::string key);
+    int add_state(std::string key);
+    State* get_state();
+    State* get_previous_state();
+    void back();
     void clear();
 
-    void input();
     void update();
-
-    //NOTE(clark): TEST
-    void update(unsigned int inp);
-
-    void render();
+    void handle_temp_states();
 };
 
 #endif //__STATESYSTEM_HPP

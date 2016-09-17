@@ -9,6 +9,9 @@
 #include "engine.hpp"
 #include "State.hpp"
 
+// Is this necessary if it has already been pound included in "state.hpp"
+#include <list>
+
 class GameState : public State
 {
 private:
@@ -21,13 +24,15 @@ public:
     GameState();
     ~GameState();
 
-    void input();
+    void begin();
+    void input(std::list<Event> eventList);
     void update();
 
     //NOTE(clark): TEST
     void update(unsigned int inp);
 
     void render();
+    void end();
 };
 
 
