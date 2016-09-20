@@ -28,6 +28,9 @@
 *.out
 *.app
 
+# Project Files
+*.swp
+
 # Directories
 build/
 doc/

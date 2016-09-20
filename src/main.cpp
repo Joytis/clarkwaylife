@@ -20,6 +20,7 @@ using namespace std;
 // the ONLY instance of Engine object that you should //EVER// make
 EngineObj eng;
 
+//void StateSystem::addSystemState<GameState>(std::string key);
 
 //===================================================================================//
 // -------------------- Clarkwaylife: Start of Main ---------------------------------//
@@ -46,8 +47,8 @@ int main()
 
     // Initialize the state system
     //-------------------------------------------------------------
-    eng.system()->add_state("game", new GameState());
-    eng.system()->swap_state("game");
+    eng.system()->addSystemState<GameState>("game");
+
 
     //======================================//
     //  Start main loop                     //
@@ -115,12 +116,12 @@ int main()
 
         // Update the state system
         //===========================
-        //printf("%d ", input);
-        eng.system()->update(input);
+        //eng.system()->input();
+        eng.system()->update();
 
         // Render the State system
         //===========================
-        eng.system()->render();
+        //eng.system()->render();
 
         // Presend to Screen
         //===========================

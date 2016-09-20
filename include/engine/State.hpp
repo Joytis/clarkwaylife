@@ -10,16 +10,17 @@
 class State
 {
 private:
-	bool processed;
+
+protected:
+	//bool processed;
 
 public:
 	virtual void begin() = 0;
 
-    virtual void input(std::list<Event> eventList) = 0;
-    virtual void update() = 0;
+    virtual void input() = 0;
+    //virtual void input(std::list<Event> eventList) = 0;
 
-    // NOTE(clark): TEST
-    virtual void update(unsigned int inp) = 0;
+    virtual void update() = 0;
 
     virtual void render() = 0;
 

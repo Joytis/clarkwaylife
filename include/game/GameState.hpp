@@ -25,7 +25,8 @@ public:
     ~GameState();
 
     void begin();
-    void input(std::list<Event> eventList);
+    void input();
+    //void input(std::list<Event> eventList);
     void update();
 
     //NOTE(clark): TEST

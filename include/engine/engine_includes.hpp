@@ -21,6 +21,8 @@
 #define ERR_GENERIC_FAILED              (-1)
 #define GENERIC_SUCCESS                 (1)
 
+typedef unsigned char BYTE;
+
 // Engine macros
 #define ENG_DEL(ptr)        \
 if(ptr)                     \
