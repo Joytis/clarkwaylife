@@ -8,61 +8,43 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <utility>
 
 #include "engine_includes.hpp"
 
 #include "State.hpp"
 
-#define POP_STR "pop"
-#define CLEAR_STR "clear"
+#define STSYSTEM_POP_STACK          (0)
+#define STSYSTEM_CLEAR_STACK        (1)
+#define STSYSTEM_PUSH_STACK         (2)
 
-class StateSystem;
-typedef State* (StateSystem::*memberf)(void) ;
+typedef std::pair<BYTE, State*> stack_type;
 
 class StateSystem
 {
-public:
-
-    StateSystem();
-
-
-    // Saw what you wanted to do at line 90. Unfortunately, c++ doesn't store Types
-    //  at runtime, so to create a state we need to have a pointer reference
-    //  to a function that will actually create an instance of the state.
-    //  This should do that when you call all_states[key](args), and return
-    //  a state of the respective type.
-    template<typename T>
-    void getStateCall() {
-        return new T;
-    }
-
-    // Creates a mapping between a string and a type. Creates a new T when
-    //  all_states[key] is called with respective typing.
-    template<typename T>
-    void addSystemState(std::string key) {
-        if (all_states.find(key) == all_states.end()) {
-            all_states[key] = StateSystem::getStateCall<T>; // Point to a facroty function
-        }
-        else{
-            // TODO(n/a): Handle case
-        }
-    }
-
-    int add_state(std::string key);
-    State* get_state();
-    State* get_previous_state();
-    void back();
-    void clear();
-
-    void update();
-
-    void handle_temp_states();
 
 private:
-    std::map<std::string, memberf> all_states;
     std::vector<State*> states;
-    std::vector<std::string> temp_states;
+    std::vector<stack_type> temp_states;
     State *current;
+
+public:
+
+    //Constructors
+    StateSystem();
+
+    // Stack manipulatirs
+    void push(State* sta);
+    void back();
+    void clear();
+    void handle_temp_states();
+
+    // State getters
+    State* get_state();
+    State* get_previous_state();
+
+
+    void update();
 
 };
 

@@ -9,15 +9,15 @@ StateSystem::StateSystem(){
 }
 
 // Is there a way to pass arguments into a constructor using this method?
-int StateSystem::add_state(std::string key) {
-    if(all_states.find(key) == all_states.end()) {
-        return ERR_GENERIC_FAILED;
-    }
-    else {
-        temp_states.push_back(key);
-    }
-    return GENERIC_SUCCESS;
-}
+//int StateSystem::add_state(std::string key) {
+//    if(all_states.find(key) == all_states.end()) {
+//        return ERR_GENERIC_FAILED;
+//    }
+//    else {
+//        temp_states.push_back(key);
+//    }
+//    return GENERIC_SUCCESS;
+//}
 
 State* StateSystem::get_state() {
     if(!states.empty()) {
@@ -38,11 +38,17 @@ State* StateSystem::get_previous_state() {
 }
 
 void StateSystem::back() {
-    temp_states.push_back(POP_STR);
+    temp_states.push_back(std::make_pair(STSYSTEM_POP_STACK, nullptr));
 }
 
 void StateSystem::clear() {
-    temp_states.push_back(CLEAR_STR);
+    temp_states.push_back(std::make_pair(STSYSTEM_CLEAR_STACK, nullptr));
+}
+
+// DON"T YOU DARE CALL THIS IN STATE::BEGIN(); (or in the constructor)
+void StateSystem::push(State* sta) {
+    auto tup = std::make_pair(STSYSTEM_PUSH_STACK, sta);
+    temp_states.push_back(tup);
 }
 
 //updates the current state at every tick
@@ -58,25 +64,30 @@ void StateSystem::update() {
     handle_temp_states();
 }
 
-
 // Find a way to pass arguments into this?
 void StateSystem::handle_temp_states() {
-    for(std::string key : temp_states) {
-        if(key == POP_STR) {
-            if(!states.empty()) {
-                states.front()->end();
-                states.pop_back();
-            }
-        }
-        else if(key == CLEAR_STR) {
-            // Delete all the states
-            while(!states.empty()) delete states.back(), states.pop_back();
-        }
-        else {
-            int k; // temporary stuff
-            State* new_state = all_states[key](); // Create a new state
-            states.push_back(new_state);
-            new_state->begin();
+    for(stack_type tup : temp_states) {
+        switch(tup.first) {
+            case STSYSTEM_POP_STACK:
+                if (!states.empty()) {
+                    State* working_state = get_state();
+                    get_state()->end();
+                    delete working_state;
+                    states.pop_back();
+                }
+                break;
+            case STSYSTEM_CLEAR_STACK:
+                // Delete all the states
+                while (!states.empty()) delete states.back(), states.pop_back();
+                break;
+            case STSYSTEM_PUSH_STACK:
+                states.push_back(tup.second);
+                tup.second->begin();
+                break;
+            default:
+                debug(ENGINE_DBG_STATES, "SS: Should not be here. :I");
+                break;
         }
     }
+    temp_states.clear();
 }

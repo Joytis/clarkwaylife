@@ -5,12 +5,13 @@
 #ifndef __EntityManager_H_
 #define __EntityManager_H_
 
-class EntityManager
+
+
+class ComponentManager
 {
 public:
-
-    void update() = 0;
-    void process_entities() = 0; // redundant?
+    virtual void update() = 0;
+    virtual void process_entities() = 0; // redundant?
 };
 
 #endif //__EntityManager_H_

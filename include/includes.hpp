@@ -22,6 +22,8 @@ typedef unsigned int ULONG;
 
 #define S(val) (std::to_string(val))
 
+extern unsigned int iinput;
+
 // Safely delete a pointer to an object
 //  declared with 'new'
 #define DEL(ptr)        \

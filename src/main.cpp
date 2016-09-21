@@ -19,6 +19,8 @@ using namespace std;
 // Look into a better way to defining globals.
 // the ONLY instance of Engine object that you should //EVER// make
 EngineObj eng;
+unsigned int iinput;
+
 
 //void StateSystem::addSystemState<GameState>(std::string key);
 
@@ -47,7 +49,9 @@ int main()
 
     // Initialize the state system
     //-------------------------------------------------------------
-    eng.system()->addSystemState<GameState>("game");
+    //eng.system()->addSystemState<GameState>("game");
+    GameState* bois = new GameState();
+    eng.system()->push(bois);
 
 
     //======================================//
@@ -59,24 +63,26 @@ int main()
         // Improv input
         const Uint8* keyb = SDL_GetKeyboardState(NULL);
 
-        input = 0;
-
-
+        iinput = 0;
         if(keyb[SDL_SCANCODE_UP])
         {
-            input |= (1 << 0);
+            iinput |= (1 << 0);
         }
         if(keyb[SDL_SCANCODE_DOWN])
         {
-            input |= (1 << 1);
+            iinput |= (1 << 1);
         }
         if(keyb[SDL_SCANCODE_LEFT])
         {
-            input |= (1 << 2);
+            iinput |= (1 << 2);
         }
         if(keyb[SDL_SCANCODE_RIGHT])
         {
-            input |= (1 << 3);
+            iinput |= (1 << 3);
+        }
+        if(keyb[SDL_SCANCODE_SPACE])
+        {
+            iinput |= (1 << 4);
         }
 
         // SDL Event loop

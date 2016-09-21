@@ -68,15 +68,36 @@ void GameState::input()
 
 void GameState::update()
 {
-    // debug(DBG_STATES, "GameState: update");
-}
-
-//NOTE(clark): TEST
-// THIS SHOULD BE IN INPUT, NO?
-void GameState::update(unsigned int inp)
-{
+    if(iinput != 0)
+    {
+        if(iinput & (1 << 0))
+        {
+            bird_->move(0, -10);
+            foo_->move(0, -15);
+        }
+        if(iinput & (1 << 1))
+        {
+            bird_->move(0, 10);
+            foo_->move(0, 15);
+        }
+        if(iinput & (1 << 2))
+        {
+            bird_->move(-10, 0);
+            foo_->move(-15, 0);
+        }
+        if(iinput & (1 << 3))
+        {
+            bird_->move(10, 0);
+            foo_->move(15, 0);
+        }
+        if(iinput & (1 << 4))
+        {
+            eng.system()->back();
+        }
+    }
     bird_->update();
     foo_->update();
+    // debug(DBG_STATES, "GameState: update");
 }
 
 void GameState::render()

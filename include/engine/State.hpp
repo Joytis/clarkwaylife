@@ -16,14 +16,9 @@ protected:
 
 public:
 	virtual void begin() = 0;
-
     virtual void input() = 0;
-    //virtual void input(std::list<Event> eventList) = 0;
-
     virtual void update() = 0;
-
     virtual void render() = 0;
-
     virtual void end() = 0;
 };
 
