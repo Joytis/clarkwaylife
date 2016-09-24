@@ -31,7 +31,7 @@ public:
 
     //void draw(RenderObject* robj);
 
-    void render(RenderObject* robj);
+    //void render(RenderObject* robj);
     void present();
 
     void close();

@@ -16,8 +16,6 @@ class GameState : public State
 {
 private:
     int             test_;
-    RenderObject*   bird_;
-    RenderObject*   foo_;
 
 public:
 
@@ -28,10 +26,6 @@ public:
     void input();
     //void input(std::list<Event> eventList);
     void update();
-
-    //NOTE(clark): TEST
-    void update(unsigned int inp);
-
     void render();
     void end();
 };

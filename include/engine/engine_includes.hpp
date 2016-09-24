@@ -9,6 +9,13 @@
 #include <SDL2/SDL_image.h>
 #include "dbg.hpp"
 
+// Convenient number type definitions
+typedef uint8_t     BYTE;
+typedef uint16_t    U16;
+typedef uint32_t    U32;
+typedef uint64_t    U64;
+
+
 #define ENGINE_DEBUG_ON                 (1)
 #define ENGINE_DEBUG_OFF                (0)
 
