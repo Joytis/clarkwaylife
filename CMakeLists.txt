@@ -23,10 +23,28 @@ file(GLOB_RECURSE GAME_SOURCES ${PROJECT_SOURCE_DIR}/src/game/*.cpp)
 file(GLOB_RECURSE ENGINE_SOURCES ${PROJECT_SOURCE_DIR}/src/engine/*.cpp)
 file(GLOB_RECURSE ENGINE_HEADERS ${PROJECT_SOURCE_DIR}/src/engine/*.hpp)
 
-set(clarkwaylife_SOURCES ${GAME_SOURCES} ${ENGINE_SOURCES})
+set(clarkwaylife_SOURCES ${GAME_SOURCES})
 set(wizengine_SOURCES ${ENGINE_SOURCES})
 set(wizengine_HEADERS ${ENGINE_HEADERS})
-set(test_SOURCES ${TEST_SOURCES} ${ENGINE_SOURCES})
+set(test_SOURCES ${TEST_CASES})
+
+#
+# Directories for libraries
+#=======================================================================
+find_package(SDL2 REQUIRED)
+find_package(Boost REQUIRED)
+
+# Include Directories
+#======================================================================
+include_directories(
+        ${SDL2_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIRS}
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/engine
+        ${PROJECT_SOURCE_DIR}/include/engine/systems
+        ${PROJECT_SOURCE_DIR}/include/engine/managers
+        ${PROJECT_SOURCE_DIR}/include/game
+)
 
 #
 # Add Subdirectories
