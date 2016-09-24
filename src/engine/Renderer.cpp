@@ -18,12 +18,12 @@ int Renderer::removeTexture(std::string key)
 {
     if(tm_.remove_texture(key) == GENERIC_SUCCESS)
     {
-        debug(ENGINE_DBG_RENDERER, "RE: Successfully removed texture!");
+        debug(EDBG_RNSYS, "RE: Successfully removed texture!")EDBG_RNSYS;
     }
     else
     {
         // TODO(clark): Error handling?
-        debug(ENGINE_DBG_RENDERER, "RE: Could not remove texture from manager.");
+        debug(EDBG_RNSYS, "RE: Could not remove texture from manager.")EDBG_RNSYS;
     }
     return GENERIC_SUCCESS;
 }
@@ -40,7 +40,7 @@ int Renderer::loadTexture(std::string key, std::string path, int flags)
         surface = IMG_Load(path.c_str());
         if(surface == NULL)
         {
-            debug(ENGINE_DBG_RENDERER, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError())
+            debug(EDBG_RNSYS, "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());//
         }
         else
         {
@@ -63,7 +63,7 @@ int Renderer::loadTexture(std::string key, std::string path, int flags)
     else
     {
         // TODO(clark): Error handling
-        debug(ENGINE_DBG_RENDERER, "RE: Could not load texture.");
+        debug(EDBG_RNSYS, "RE: Could not load texture.")EDBG_RNSYS;
     }
 
     return 0;
@@ -79,16 +79,6 @@ void Renderer::clear()
 {
     SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);
     SDL_RenderClear(renderer_);
-}
-
-// TODO(clark): MAKE THIS BETTER. Super simple implementation
-void Renderer::render(RenderObject* robj)
-{
-    Sprite* spr= robj->getSprite();
-    SDL_Rect* rec = spr->Rect();
-    SDL_Texture* texture = spr->Texture().texture;
-
-    SDL_RenderCopy(renderer_, texture, NULL, rec);
 }
 
 void Renderer::present()

@@ -44,11 +44,6 @@ StateSystem* EngineObj::system()
     return system_;
 }
 
-void EngineObj::render(RenderObject *robj)
-{
-    renderer_->render(robj);
-}
-
 void EngineObj::present()
 {
     renderer_->present();

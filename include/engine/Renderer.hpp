@@ -9,13 +9,10 @@
 
 #include "engine_includes.hpp"
 #include "TextureManager.hpp"
-#include "RenderObject.hpp"
 
 
 #define REND_NONE                   (0)
 #define REND_KEYCOLOR               (1 << 1)
-
-#define REND_
 
 #define RENDER_BUFFER_LENGTH        (256)
 
@@ -26,10 +23,6 @@ private:
     TextureManager  tm_;
     SDL_Renderer*   renderer_;
     SDL_Window*     w_handle_;
-    RenderObject*   render_buffer_[RENDER_BUFFER_LENGTH];
-    // Abstract render buffers into another class to simplify renderer?
-    unsigned int    rbuffer_index_;
-
 
 public:
 
@@ -46,7 +39,7 @@ public:
     // Add object to the render buffer?
     void clear();
 
-    void render(RenderObject *robj);
+    //void render(RenderObject *robj);
     // Draws all objects in the buffer?
     //void draw(RenderObject* robj);
 

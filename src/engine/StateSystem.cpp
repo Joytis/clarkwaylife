@@ -85,7 +85,7 @@ void StateSystem::handle_temp_states() {
                 tup.second->begin();
                 break;
             default:
-                debug(ENGINE_DBG_STATES, "SS: Should not be here. :I");
+                debug(EDBG_STSYS, "SS: Should not be here. :I");
                 break;
         }
     }

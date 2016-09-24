@@ -22,7 +22,7 @@ typedef struct CollisionComponent : Component {
 
 typedef struct TextureComponent : Component {
 
-};
+} TextureComponent;
 
 // Probably get something from the texture manager?
 typedef struct SpriteComponent : Component {

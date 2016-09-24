@@ -12,15 +12,17 @@
 class EntityManager
 {
 private:
-    U32 next_id_;
+    U32 cur_id_;
     std::map<U32, Entity*> entities_;
+
+    U32 get_next_id();
 
 public:
     EntityManager();
 
-    Entity* get_entity();
+    Entity* get_entity(U32 id);
     Entity* create_entity();
-    void destroy_entity();
+    void destroy_entity(U32 id);
 };
 
 #endif //__EntityManager_H_

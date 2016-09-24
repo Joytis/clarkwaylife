@@ -15,45 +15,23 @@ elseif(MINGW)
 endif()
 
 #
-# Directories for libraries
+# Source Includes
 #=======================================================================
-file(GLOB_RECURSE clarkwaylife_SOURCES "src/*.cpp")
 
-find_package(SDL2 REQUIRED)
-find_package(Boost REQUIRED)
+file(GLOB_RECURSE TEST_CASES ${PROJECT_SOURCE_DIR}/src/tests/*.cpp)
+file(GLOB_RECURSE GAME_SOURCES ${PROJECT_SOURCE_DIR}/src/game/*.cpp)
+file(GLOB_RECURSE ENGINE_SOURCES ${PROJECT_SOURCE_DIR}/src/engine/*.cpp)
+file(GLOB_RECURSE ENGINE_HEADERS ${PROJECT_SOURCE_DIR}/src/engine/*.hpp)
 
-# Include Directories
+set(clarkwaylife_SOURCES ${GAME_SOURCES} ${ENGINE_SOURCES})
+set(wizengine_SOURCES ${ENGINE_SOURCES})
+set(wizengine_HEADERS ${ENGINE_HEADERS})
+set(test_SOURCES ${TEST_SOURCES} ${ENGINE_SOURCES})
+
+#
+# Add Subdirectories
 #======================================================================
-include_directories(
-        ${SDL2_INCLUDE_DIR}
-        ${Boost_INCLUDE_DIRS}
-        ${PROJECT_SOURCE_DIR}/include
-        ${PROJECT_SOURCE_DIR}/include/engine
-        ${PROJECT_SOURCE_DIR}/include/engine/gobjects
-        ${PROJECT_SOURCE_DIR}/include/engine/ecs
-        ${PROJECT_SOURCE_DIR}/include/engine/ecs/systems
-        ${PROJECT_SOURCE_DIR}/include/game
-    )
+add_subdirectory(src/engine)
+add_subdirectory(src/game)
+add_subdirectory(src/tests)
 
-# Executable
-#======================================================================
-add_executable(clarkwaylife ${clarkwaylife_SOURCES})
-
-# Assets
-#======================================================================
-add_custom_command(TARGET clarkwaylife POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${PROJECT_SOURCE_DIR}/assets $<TARGET_FILE_DIR:clarkwaylife>/assets)
-
-# Linking
-#==========================================================================
-
-#------------------------------------------------------
-#fix for a CMake whitespace error in find_package(SDL2)
-set(SDL2_LIBRARIES "-L${SDL2_LIBDIR} -lSDL2")
-
-target_link_libraries(${PROJECT_NAME}
-        ${SDL2_LIBRARIES}
-        -L${SDL2_IMAGE_LIBRARY_DIR} -lSDL2_image
-        ${Boost_LIBRARIES}
-        )
